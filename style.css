@@ -1,0 +1,136 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 1.5rem;
+    color: #1a73e8;
+}
+
+.teams {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 1rem;
+}
+
+.team-box {
+    flex: 1;
+}
+
+.team-input {
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.score-display {
+    font-size: 3.5rem;
+    font-weight: bold;
+}
+
+.vs {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0 0.5rem;
+}
+
+.controls {
+    margin-top: 1rem;
+}
+
+.scoring-sections {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.score-controls {
+    flex: 1;
+}
+
+.score-controls p {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.point-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+button {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #1a73e8;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    min-width: 45px;
+}
+
+button:active {
+    transform: scale(0.95);
+    background-color: #1557b0;
+}
+
+.reset-btn {
+    background-color: #d93025;
+}
+
+.reset-btn:active {
+    background-color: #b02a20;
+}
+
+.hidden {
+    display: none;
+}
+
+#win-message {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background-color: #e6f4ea;
+    border-radius: 8px;
+}
+
+#win-message h2 {
+    margin: 0 0 1rem 0;
+}
+
+@media (max-width: 400px) {
+    .scoring-sections {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .score-display {
+        font-size: 2.5rem;
+    }
+}
