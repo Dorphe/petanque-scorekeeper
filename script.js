@@ -113,32 +113,6 @@
     renderTimer();
   });
 
-  // --- Score pip glow shader -------------------------------------------
-  // Values mirrored from the SCORE PIP component in the design file.
-  var SHADER_OPTIONS = {
-    lightAngle: 75.6,
-    scatter: 0.3164,
-    density: 8.575,
-    ambient: 0.14,
-    softness: 23.4,
-    noise: 0.35,
-    noiseScale: 1.136,
-    radius: 24,
-    quality: 0.5,
-    maxWidth: 260
-  };
-
-  if (typeof window.initSoftShape === "function") {
-    Array.prototype.forEach.call(document.querySelectorAll(".card"), function (card) {
-      var canvas = card.querySelector(".card__glow");
-      if (!canvas) {
-        return;
-      }
-      var color = window.getComputedStyle(card).getPropertyValue("--glow-color").trim();
-      window.initSoftShape(canvas, Object.assign({ color: color || "#c71e4e" }, SHADER_OPTIONS));
-    });
-  }
-
   // --- Init -------------------------------------------------------------
   renderTeam(1);
   renderTeam(2);

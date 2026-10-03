@@ -179,28 +179,11 @@ body {
 }
 
 .card--team1 {
-  --glow-color: #c71e4e;
   box-shadow: 0 0 30px var(--team1-glow);
 }
 
 .card--team2 {
-  --glow-color: #1d4ed8;
   box-shadow: 0 0 30px var(--team2-glow);
-}
-
-.card__glow {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.card > :not(.card__glow) {
-  position: relative;
-  z-index: 1;
 }
 
 .card__top {
