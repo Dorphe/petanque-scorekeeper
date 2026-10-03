@@ -271,8 +271,6 @@
     renderTimer();
   }
 
-  document.getElementById("timer-reset").addEventListener("click", resetTimer);
-
   // Background tabs throttle timers, so refresh from the clock on return.
   document.addEventListener("visibilitychange", renderTimer);
   window.addEventListener("pageshow", renderTimer);

@@ -71,6 +71,14 @@ body {
   padding: 40px;
 }
 
+/* Bottom controls row */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
 /* Timer */
 .timer {
   display: inline-flex;
