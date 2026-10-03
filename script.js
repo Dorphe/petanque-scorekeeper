@@ -12,7 +12,6 @@
   var scores = { 1: readScore("score1"), 2: readScore("score2") };
 
   var scoreEls = { 1: document.getElementById("score-1"), 2: document.getElementById("score-2") };
-  var countEls = { 1: document.getElementById("count-1"), 2: document.getElementById("count-2") };
   var fillEls = { 1: document.getElementById("progress-1"), 2: document.getElementById("progress-2") };
   var cardEls = {
     1: document.querySelector('.card[data-team="1"]'),
@@ -24,7 +23,6 @@
     var won = score >= TARGET;
 
     scoreEls[team].textContent = score;
-    countEls[team].textContent = won ? "Winner" : score + " / " + TARGET;
     fillEls[team].style.width = Math.min(score / TARGET, 1) * 100 + "%";
     cardEls[team].classList.toggle("is-winner", won);
   }
@@ -102,6 +100,32 @@
     seconds = 0;
     renderTimer();
   });
+
+  // --- Score pip glow shader -------------------------------------------
+  // Values mirrored from the SCORE PIP component in the design file.
+  var SHADER_OPTIONS = {
+    lightAngle: 75.6,
+    scatter: 0.3164,
+    density: 8.575,
+    ambient: 0.14,
+    softness: 23.4,
+    noise: 0.35,
+    noiseScale: 1.136,
+    radius: 24,
+    quality: 0.5,
+    maxWidth: 260
+  };
+
+  if (typeof window.initSoftShape === "function") {
+    Array.prototype.forEach.call(document.querySelectorAll(".card"), function (card) {
+      var canvas = card.querySelector(".card__glow");
+      if (!canvas) {
+        return;
+      }
+      var color = window.getComputedStyle(card).getPropertyValue("--glow-color").trim();
+      window.initSoftShape(canvas, Object.assign({ color: color || "#c71e4e" }, SHADER_OPTIONS));
+    });
+  }
 
   // --- Init -------------------------------------------------------------
   renderTeam(1);
