@@ -52,6 +52,9 @@
     scores[team] = Math.min(TARGET, Math.max(0, scores[team] + delta));
     saveScores();
     renderTeam(team);
+    if (scores[team] >= TARGET) {
+      setRunning(false);
+    }
   }
 
   Array.prototype.forEach.call(document.querySelectorAll(".card"), function (card) {
@@ -69,6 +72,7 @@
     saveScores();
     renderTeam(1);
     renderTeam(2);
+    resetTimer();
   });
 
   // --- Team names -------------------------------------------------------
@@ -258,14 +262,16 @@
     setRunning(!isRunning());
   });
 
-  document.getElementById("timer-reset").addEventListener("click", function () {
+  function resetTimer() {
     setRunning(false);
     elapsed = 0;
     startedAt = null;
     saveTimer();
     syncControls();
     renderTimer();
-  });
+  }
+
+  document.getElementById("timer-reset").addEventListener("click", resetTimer);
 
   // Background tabs throttle timers, so refresh from the clock on return.
   document.addEventListener("visibilitychange", renderTimer);
