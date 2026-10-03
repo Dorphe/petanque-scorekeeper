@@ -1,33 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pétanque Scorekeeper</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pétanque Scorekeeper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <div class="score-board">
-            <div class="score-pip pip-1">
-                <div class="score-value" id="score1">0</div>
-                <div class="btn-group">
-                    <button class="btn" onclick="changeScore(1, -1)">-</button>
-                    <button class="btn" onclick="changeScore(1, 1)">+</button>
-                </div>
-            </div>
-            <div class="score-pip pip-2">
-                <div class="score-value" id="score2">0</div>
-                <div class="btn-group">
-                    <button class="btn" onclick="changeScore(2, -1)">-</button>
-                    <button class="btn" onclick="changeScore(2, 1)">+</button>
-                </div>
-            </div>
+  <main class="app">
+    <section class="timer" aria-label="Match timer">
+      <span class="timer__readout">
+        <svg class="timer__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="10" x2="14" y1="2" y2="2" />
+          <line x1="12" x2="15" y1="14" y2="11" />
+          <circle cx="12" cy="14" r="8" />
+        </svg>
+        <span id="timer" class="timer__value">00:00</span>
+      </span>
+      <span class="timer__divider" aria-hidden="true"></span>
+      <button id="timer-toggle" class="icon-btn icon-btn--primary" type="button" aria-label="Start timer" aria-pressed="false">
+        <span class="icon-btn__icon icon-btn__icon--pause">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="14" y="3" width="5" height="18" rx="1" />
+            <rect x="5" y="3" width="5" height="18" rx="1" />
+          </svg>
+        </span>
+        <span class="icon-btn__icon icon-btn__icon--play">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" />
+          </svg>
+        </span>
+      </button>
+      <button id="timer-reset" class="icon-btn" type="button" aria-label="Reset timer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 2h4" />
+          <path d="M12 14v-4" />
+          <path d="M4 13a8 8 0 0 1 8-7 8 8 0 1 1-5.3 14L4 17.6" />
+          <path d="M9 17H4v5" />
+        </svg>
+      </button>
+    </section>
+
+    <section class="scoreboard" aria-label="Scores">
+      <article class="card card--team1" data-team="1">
+        <header class="card__top">
+          <span class="card__team">
+            <span class="card__dot" aria-hidden="true"></span>
+            <span class="card__name">Team 1</span>
+          </span>
+          <span class="card__count" id="count-1">0 / 13</span>
+        </header>
+        <div class="card__score" id="score-1">0</div>
+        <div class="progress"><div class="progress__fill" id="progress-1"></div></div>
+        <div class="card__controls">
+          <button class="score-btn score-btn--minus" type="button" data-delta="-1" aria-label="Decrease Team 1 score">&minus;</button>
+          <button class="score-btn score-btn--plus" type="button" data-delta="1" aria-label="Increase Team 1 score">+</button>
         </div>
+      </article>
 
-        <button class="reset-btn" id="reset-btn">Reset Score</button>
-    </div>
+      <article class="card card--team2" data-team="2">
+        <header class="card__top">
+          <span class="card__team">
+            <span class="card__dot" aria-hidden="true"></span>
+            <span class="card__name">Team 2</span>
+          </span>
+          <span class="card__count" id="count-2">0 / 13</span>
+        </header>
+        <div class="card__score" id="score-2">0</div>
+        <div class="progress"><div class="progress__fill" id="progress-2"></div></div>
+        <div class="card__controls">
+          <button class="score-btn score-btn--minus" type="button" data-delta="-1" aria-label="Decrease Team 2 score">&minus;</button>
+          <button class="score-btn score-btn--plus" type="button" data-delta="1" aria-label="Increase Team 2 score">+</button>
+        </div>
+      </article>
+    </section>
 
-    <script src="script.js"></script>
+    <button id="reset-scores" class="icon-btn reset-scores" type="button" aria-label="Reset scores">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+        <path d="M3 3v5h5" />
+      </svg>
+    </button>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
