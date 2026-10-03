@@ -16,16 +16,30 @@ function init() {
 
 init();
 
+function animateScoreUpdate(display, newValue, isIncreasing) {
+    // Move element up when increasing, down when decreasing
+    if (isIncreasing) {
+        display.classList.add('move-up');
+    } else {
+        display.classList.add('move-down');
+    }
+    setTimeout(() => {
+        display.textContent = newValue;
+        display.classList.remove(isIncreasing ? 'move-up' : 'move-down');
+    }, 150);
+}
+
 function changeScore(teamNum, amount) {
+    const isIncreasing = amount > 0;
     if (teamNum === 1) {
         score1 += amount;
         if (score1 < 0) score1 = 0; // Prevent negative scores
-        score1Display.textContent = score1;
+        animateScoreUpdate(score1Display, score1, isIncreasing);
         localStorage.setItem('score1', score1);
     } else {
         score2 += amount;
         if (score2 < 0) score2 = 0;
-        score2Display.textContent = score2;
+        animateScoreUpdate(score2Display, score2, isIncreasing);
         localStorage.setItem('score2', score2);
     }
     checkWin();

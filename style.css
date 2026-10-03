@@ -1,10 +1,10 @@
 :root {
-  --bg-color: #F8F5F2;
-  --text-primary: #3D2B1F;
-  --accent-1: #BE123C;
-  --accent-2: #1D4ED8;
-  --btn-bg: #E7E0D6;
-  --btn-text: #A36F5E;
+  --bg-color: #1c1c1c;
+  --text-primary: #ffffff;
+  --accent-1: linear-gradient(to bottom, #BE123C, #f02b94);
+  --accent-2: linear-gradient(to bottom, #1D4ED8, #2bbbf0);
+  --btn-bg: #ffffff;
+  --btn-text: #1c1c1c;
   --font-main: 'Inter', sans-serif;
 }
 
@@ -42,28 +42,37 @@ h1 {
 .score-board {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
 }
 
 .score-pip {
-  background: #FFFFFF;
+  background: var(--accent-1);
   border-radius: 24px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  gap: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
   border: 8px solid transparent;
 }
 
-.pip-1 { border-color: var(--accent-1); }
-.pip-2 { border-color: var(--accent-2); }
+.pip-1 { background: var(--accent-1); }
+.pip-2 { background: var(--accent-2); }
 
 .score-value {
   font-size: 72px;
   font-weight: 800;
+  transition: opacity 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.score-value.move-up {
+  transform: translateY(-20px);
+}
+
+.score-value.move-down {
+  transform: translateY(20px);
 }
 
 .controls {
@@ -79,9 +88,9 @@ h1 {
 }
 
 .btn {
-  background: #3d3c3966;
+  background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   padding: 12px 24px;
   font-size: 24px;
@@ -98,12 +107,16 @@ h1 {
   background: var(--btn-bg);
   color: var(--btn-text);
   border: none;
-  border-radius: 99px;
-  padding: 12px 48px;
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 24px;
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: 900;
   cursor: pointer;
-  margin-top: 8px;
+  transition: transform 0.1s;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .reset-btn:active {
