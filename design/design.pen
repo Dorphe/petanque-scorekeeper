@@ -1,0 +1,233 @@
+{
+  "version": "2.20",
+  "children": [
+    {
+      "type": "frame",
+      "id": "O8eKA",
+      "x": 699,
+      "y": -75,
+      "name": "Pétanque score",
+      "clip": true,
+      "width": 420,
+      "height": 722,
+      "fill": "#1c1c1cff",
+      "layout": "vertical",
+      "gap": 48,
+      "padding": 48,
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "BIpSP",
+          "name": "Frame 1",
+          "width": 324,
+          "height": "fit_content(443)",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "id": "j7TGB5",
+              "type": "ref",
+              "ref": "hroh5",
+              "x": 0,
+              "y": 0,
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": [
+                "#BE123C",
+                {
+                  "type": "shader",
+                  "enabled": true,
+                  "url": "design-assets/soft-shape.glsl",
+                  "uniforms": {
+                    "u_color": "#f02b94",
+                    "u_lightAngle": 25.2,
+                    "u_scatter": 0.1074,
+                    "u_density": 1.26,
+                    "u_ambient": 0.2,
+                    "u_softness": 13.95,
+                    "u_noise": 0.32,
+                    "u_noiseScale": 0.902
+                  }
+                }
+              ],
+              "descendants": {
+                "wBJMu": {
+                  "fill": "#ffffffff"
+                }
+              }
+            },
+            {
+              "id": "nDQmd",
+              "type": "ref",
+              "ref": "hroh5",
+              "x": 0,
+              "y": 229.5,
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": [
+                "#1D4ED8",
+                {
+                  "type": "shader",
+                  "enabled": true,
+                  "url": "design-assets/soft-shape.glsl",
+                  "uniforms": {
+                    "u_color": "#2bbbf0",
+                    "u_lightAngle": 25.2,
+                    "u_scatter": 0.1074,
+                    "u_density": 1.26,
+                    "u_ambient": 0.2,
+                    "u_softness": 13.95,
+                    "u_noise": 0.32,
+                    "u_noiseScale": 0.902
+                  }
+                }
+              ],
+              "descendants": {
+                "wBJMu": {
+                  "fill": "#ffffffff"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "reset_btn",
+          "name": "Reset Button",
+          "width": "fill_container",
+          "height": 48,
+          "fill": "#666666ff",
+          "cornerRadius": 99,
+          "gap": 8,
+          "padding": 12,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "reset_text",
+              "fill": "#f0f0f0ff",
+              "content": "Reset Score",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "600"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "hroh5",
+      "x": 699,
+      "y": -294,
+      "name": "SCORE PIP",
+      "reusable": true,
+      "clip": true,
+      "width": 260,
+      "height": 175,
+      "fill": "#FFFFFF",
+      "cornerRadius": 24,
+      "layout": "vertical",
+      "gap": 24,
+      "padding": 24,
+      "justifyContent": "center",
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "wUWcc",
+          "name": "score",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "padding": 12,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "wBJMu",
+              "fill": "#3D2B1F",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "0",
+              "textAlign": "center",
+              "fontFamily": "Inter",
+              "fontSize": 72,
+              "fontWeight": "800"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Oo6Cu",
+          "name": "plusminus buttons",
+          "gap": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "FQnUR",
+              "name": "minus",
+              "clip": true,
+              "width": 40,
+              "height": 40,
+              "fill": "#3d3c3966",
+              "cornerRadius": 999,
+              "layout": "vertical",
+              "padding": [
+                12,
+                13
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "QkEjN",
+                  "fill": "#ffffffff",
+                  "content": "-",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "900"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "j4OEej",
+              "name": "plus",
+              "clip": true,
+              "width": 40,
+              "height": 40,
+              "fill": "#3d3c3966",
+              "cornerRadius": 999,
+              "layout": "vertical",
+              "padding": [
+                12,
+                13
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "OZ2l1",
+                  "fill": "#ffffffff",
+                  "content": "+",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "900"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "fileToken": "8bb5bc2e-5f1c-4d7f-b288-2531688b00cc"
+}
