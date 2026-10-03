@@ -297,6 +297,11 @@ body {
   transform: scale(0.97);
 }
 
+.score-btn:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
 .score-btn--minus {
   font-weight: 500;
   color: var(--text-mute);

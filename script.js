@@ -6,7 +6,7 @@
   // --- Scores -----------------------------------------------------------
   function readScore(key) {
     var value = parseInt(localStorage.getItem(key), 10);
-    return Number.isFinite(value) && value > 0 ? value : 0;
+    return Number.isFinite(value) && value > 0 ? Math.min(value, TARGET) : 0;
   }
 
   var scores = { 1: readScore("score1"), 2: readScore("score2") };
@@ -18,6 +18,10 @@
     1: document.querySelector('.card[data-team="1"]'),
     2: document.querySelector('.card[data-team="2"]')
   };
+  var plusBtnEls = {
+    1: document.querySelector('.card[data-team="1"] .score-btn--plus'),
+    2: document.querySelector('.card[data-team="2"] .score-btn--plus')
+  };
 
   function renderTeam(team) {
     var score = scores[team];
@@ -26,6 +30,7 @@
     scoreEls[team].textContent = score;
     countEls[team].textContent = won ? "Winner" : score + " / " + TARGET;
     fillEls[team].style.width = Math.min(score / TARGET, 1) * 100 + "%";
+    plusBtnEls[team].disabled = won;
     cardEls[team].classList.toggle("is-winner", won);
   }
 
@@ -35,7 +40,7 @@
   }
 
   function changeScore(team, delta) {
-    scores[team] = Math.max(0, scores[team] + delta);
+    scores[team] = Math.min(TARGET, Math.max(0, scores[team] + delta));
     saveScores();
     renderTeam(team);
   }
