@@ -33,6 +33,15 @@
   box-sizing: border-box;
 }
 
+/* Prevent double-tap-to-zoom (and the tap delay) on controls while keeping
+   pinch-to-zoom available for accessibility. */
+button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 html,
 body {
   margin: 0;
