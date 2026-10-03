@@ -12,6 +12,7 @@
   var scores = { 1: readScore("score1"), 2: readScore("score2") };
 
   var scoreEls = { 1: document.getElementById("score-1"), 2: document.getElementById("score-2") };
+  var countEls = { 1: document.getElementById("count-1"), 2: document.getElementById("count-2") };
   var fillEls = { 1: document.getElementById("progress-1"), 2: document.getElementById("progress-2") };
   var cardEls = {
     1: document.querySelector('.card[data-team="1"]'),
@@ -23,6 +24,7 @@
     var won = score >= TARGET;
 
     scoreEls[team].textContent = score;
+    countEls[team].textContent = won ? "Winner" : score + " / " + TARGET;
     fillEls[team].style.width = Math.min(score / TARGET, 1) * 100 + "%";
     cardEls[team].classList.toggle("is-winner", won);
   }

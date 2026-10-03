@@ -203,6 +203,44 @@ body {
   z-index: 1;
 }
 
+.card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card__team {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+}
+
+.card--team1 .card__dot {
+  background: var(--team1);
+}
+
+.card--team2 .card__dot {
+  background: var(--team2);
+}
+
+.card__name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dim);
+}
+
+.card__count {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-faint);
+}
+
 .card__score {
   font-size: 80px;
   font-weight: 700;
@@ -301,6 +339,10 @@ body {
 .card--team2.is-winner {
   border-color: var(--team2);
   box-shadow: 0 0 38px rgba(43, 187, 240, 0.42);
+}
+
+.card.is-winner .card__count {
+  color: var(--text);
 }
 
 /* Score reset */
