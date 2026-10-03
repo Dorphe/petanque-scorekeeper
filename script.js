@@ -68,12 +68,46 @@
   });
 
   // --- Timer ------------------------------------------------------------
-  var seconds = 0;
+  // Elapsed time is derived from the wall clock, not counted ticks, so the
+  // timer stays correct even while the tab is closed, suspended or throttled.
+  var TIMER_KEY = "petanque.timer";
+  var elapsed = 0; // accumulated seconds from paused run segments
+  var startedAt = null; // Date.now() when running, null when paused
   var timerId = null;
-  var running = false;
 
   var timerEl = document.getElementById("timer");
   var toggleBtn = document.getElementById("timer-toggle");
+
+  function readTimer() {
+    try {
+      var raw = localStorage.getItem(TIMER_KEY);
+      if (!raw) {
+        return;
+      }
+      var parsed = JSON.parse(raw);
+      elapsed = Number.isFinite(parsed.elapsed) && parsed.elapsed > 0 ? parsed.elapsed : 0;
+      startedAt = Number.isFinite(parsed.startedAt) ? parsed.startedAt : null;
+    } catch (e) {
+      elapsed = 0;
+      startedAt = null;
+    }
+  }
+
+  function saveTimer() {
+    localStorage.setItem(TIMER_KEY, JSON.stringify({ elapsed: elapsed, startedAt: startedAt }));
+  }
+
+  function isRunning() {
+    return startedAt !== null;
+  }
+
+  function currentSeconds() {
+    var base = elapsed;
+    if (startedAt !== null) {
+      base += (Date.now() - startedAt) / 1000;
+    }
+    return Math.max(0, Math.floor(base));
+  }
 
   function formatTime(total) {
     var minutes = Math.floor(total / 60);
@@ -82,40 +116,71 @@
   }
 
   function renderTimer() {
-    timerEl.textContent = formatTime(seconds);
+    timerEl.textContent = formatTime(currentSeconds());
   }
 
-  function setRunning(next) {
-    running = next;
-    if (running) {
-      if (timerId === null) {
-        timerId = window.setInterval(function () {
-          seconds += 1;
-          renderTimer();
-        }, 1000);
-      }
-    } else if (timerId !== null) {
-      window.clearInterval(timerId);
-      timerId = null;
-    }
+  function syncControls() {
+    var running = isRunning();
     toggleBtn.classList.toggle("is-paused", !running);
     toggleBtn.setAttribute("aria-pressed", String(running));
     toggleBtn.setAttribute("aria-label", running ? "Pause timer" : "Start timer");
   }
 
+  function stopTicking() {
+    if (timerId !== null) {
+      window.clearInterval(timerId);
+      timerId = null;
+    }
+  }
+
+  function ensureTicking() {
+    if (timerId === null) {
+      timerId = window.setInterval(renderTimer, 1000);
+    }
+  }
+
+  function setRunning(next) {
+    if (next === isRunning()) {
+      return;
+    }
+    if (next) {
+      startedAt = Date.now();
+      ensureTicking();
+    } else {
+      elapsed += (Date.now() - startedAt) / 1000;
+      startedAt = null;
+      stopTicking();
+    }
+    saveTimer();
+    syncControls();
+    renderTimer();
+  }
+
   toggleBtn.addEventListener("click", function () {
-    setRunning(!running);
+    setRunning(!isRunning());
   });
 
   document.getElementById("timer-reset").addEventListener("click", function () {
     setRunning(false);
-    seconds = 0;
+    elapsed = 0;
+    startedAt = null;
+    saveTimer();
+    syncControls();
     renderTimer();
   });
+
+  // Background tabs throttle timers, so refresh from the clock on return.
+  document.addEventListener("visibilitychange", renderTimer);
+  window.addEventListener("pageshow", renderTimer);
+  window.addEventListener("focus", renderTimer);
 
   // --- Init -------------------------------------------------------------
   renderTeam(1);
   renderTeam(2);
+  readTimer();
+  if (isRunning()) {
+    ensureTicking();
+  }
+  syncControls();
   renderTimer();
-  setRunning(false);
 })();
