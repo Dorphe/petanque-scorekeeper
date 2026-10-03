@@ -22,6 +22,10 @@
     1: document.querySelector('.card[data-team="1"] .score-btn--plus'),
     2: document.querySelector('.card[data-team="2"] .score-btn--plus')
   };
+  var minusBtnEls = {
+    1: document.querySelector('.card[data-team="1"] .score-btn--minus'),
+    2: document.querySelector('.card[data-team="2"] .score-btn--minus')
+  };
 
   function renderTeam(team) {
     var score = scores[team];
@@ -31,6 +35,7 @@
     countEls[team].textContent = won ? "Winner" : score + " / " + TARGET;
     fillEls[team].style.width = Math.min(score / TARGET, 1) * 100 + "%";
     plusBtnEls[team].disabled = won;
+    minusBtnEls[team].disabled = score <= 0;
     cardEls[team].classList.toggle("is-winner", won);
   }
 
