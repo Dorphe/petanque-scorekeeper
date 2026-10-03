@@ -26,6 +26,10 @@
     1: document.querySelector('.card[data-team="1"] .score-btn--minus'),
     2: document.querySelector('.card[data-team="2"] .score-btn--minus')
   };
+  var nameEls = {
+    1: document.querySelector('.card[data-team="1"] .card__name'),
+    2: document.querySelector('.card[data-team="2"] .card__name')
+  };
 
   function renderTeam(team) {
     var score = scores[team];
@@ -65,6 +69,100 @@
     saveScores();
     renderTeam(1);
     renderTeam(2);
+  });
+
+  // --- Team names -------------------------------------------------------
+  var NAMES_KEY = "petanque.names";
+  var DEFAULT_NAMES = { 1: "Team 1", 2: "Team 2" };
+  var teamNames = readNames();
+
+  function sanitizeName(value, fallback) {
+    var name = typeof value === "string" ? value.trim() : "";
+    return name || fallback;
+  }
+
+  function readNames() {
+    try {
+      var raw = localStorage.getItem(NAMES_KEY);
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        return {
+          1: sanitizeName(parsed[1], DEFAULT_NAMES[1]),
+          2: sanitizeName(parsed[2], DEFAULT_NAMES[2])
+        };
+      }
+    } catch (e) {
+      // fall through to defaults
+    }
+    return { 1: DEFAULT_NAMES[1], 2: DEFAULT_NAMES[2] };
+  }
+
+  function saveNames() {
+    localStorage.setItem(NAMES_KEY, JSON.stringify(teamNames));
+  }
+
+  function renderName(team) {
+    nameEls[team].textContent = teamNames[team];
+    nameEls[team].setAttribute("aria-label", "Rename " + teamNames[team]);
+  }
+
+  function startRename(team) {
+    var el = nameEls[team];
+    if (el.dataset.editing === "true") {
+      return;
+    }
+
+    var input = document.createElement("input");
+    input.type = "text";
+    input.className = "card__name-input";
+    input.value = teamNames[team];
+    input.maxLength = 24;
+    input.setAttribute("aria-label", "Team name");
+
+    el.dataset.editing = "true";
+    el.hidden = true;
+    el.parentNode.insertBefore(input, el.nextSibling);
+    input.focus();
+    input.select();
+
+    function finish(commit) {
+      if (el.dataset.editing !== "true") {
+        return;
+      }
+      el.dataset.editing = "";
+      if (commit) {
+        teamNames[team] = sanitizeName(input.value, DEFAULT_NAMES[team]);
+        saveNames();
+      }
+      if (input.parentNode) {
+        input.parentNode.removeChild(input);
+      }
+      el.hidden = false;
+      renderName(team);
+    }
+
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        finish(true);
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        finish(false);
+      }
+    });
+    input.addEventListener("blur", function () {
+      finish(true);
+    });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".card"), function (card) {
+    var team = card.getAttribute("data-team");
+    var nameEl = card.querySelector(".card__name");
+    if (nameEl) {
+      nameEl.addEventListener("click", function () {
+        startRename(team);
+      });
+    }
   });
 
   // --- Timer ------------------------------------------------------------
@@ -177,6 +275,8 @@
   // --- Init -------------------------------------------------------------
   renderTeam(1);
   renderTeam(2);
+  renderName(1);
+  renderName(2);
   readTimer();
   if (isRunning()) {
     ensureTicking();
